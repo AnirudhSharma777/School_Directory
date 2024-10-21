@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.postgresSpring.Dto.SchoolDto;
 import com.example.postgresSpring.DtoResponses.SchoolResponseDto;
-import com.example.postgresSpring.Entities.School;
-import com.example.postgresSpring.Repositories.SchoolRepository;
 import com.example.postgresSpring.Services.SchoolService;
 
 @RestController

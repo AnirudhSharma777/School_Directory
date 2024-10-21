@@ -29,7 +29,7 @@ public class StudentService {
                 savedStudent.getEmail());
     }
 
-    private Student mapper(StudentDto dto) {
+    public Student mapper(StudentDto dto) {
         Student student = new Student();
         student.setFirstname(dto.firstname());
         student.setLastname(dto.lastname());

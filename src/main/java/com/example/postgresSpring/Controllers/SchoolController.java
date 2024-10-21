@@ -7,27 +7,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.postgresSpring.Dto.SchoolDto;
+import com.example.postgresSpring.DtoResponses.SchoolResponseDto;
 import com.example.postgresSpring.Entities.School;
 import com.example.postgresSpring.Repositories.SchoolRepository;
+import com.example.postgresSpring.Services.SchoolService;
 
 @RestController
 public class SchoolController {
 
+    private final SchoolService schoolService;
 
-    private final SchoolRepository schoolRepository;
-
-    public SchoolController(SchoolRepository schoolRepository){
-        this.schoolRepository = schoolRepository;
+    public SchoolController(SchoolService schoolService){
+        this.schoolService = schoolService;
     }
 
     @PostMapping("/schools")
-    public School createSchool(@RequestBody School school){
-        return schoolRepository.save(school);
+    public SchoolResponseDto createSchool(@RequestBody SchoolDto schoolDto){
+        return schoolService.addNewSchool(schoolDto);
     }
 
     @GetMapping("/schools")
-    public List<School> getAllSchools(){
-        return schoolRepository.findAll();
+    public List<SchoolResponseDto> getAllSchools(){
+        return schoolService.getListOfSchools();
     }
 
     

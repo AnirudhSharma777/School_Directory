@@ -1,7 +1,7 @@
 package com.example.postgresSpring.Services;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -43,26 +43,40 @@ public class StudentService {
         return student;
     }
 
-    public Student getStudentById(Long id) {
-        return studentRepository.findById(id).orElse(new Student());
+    public StudentResponseDto getStudentById(Long id) {
+        var student = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
+
+        return new StudentResponseDto(
+                student.getFirstname(),
+                student.getLastname(),
+                student.getEmail());
+
     }
 
-    public List<Student> getListOfStudent() {
-       return studentRepository.findAll();
+    public List<StudentResponseDto> getListOfStudent() {
+        return studentRepository.findAll().stream()
+                .map(student -> new StudentResponseDto(
+                        student.getFirstname(),
+                        student.getLastname(),
+                        student.getEmail()))
+                .collect(Collectors.toList());
     }
 
-    public Student getStudentByThereName(String name) {
-       return studentRepository.findByFirstnameContaining(name);
+    public StudentResponseDto getStudentByThereName(String name) {
+        var student = studentRepository.findByFirstnameContaining(name);
+        return new StudentResponseDto(student.getFirstname(), student.getLastname(), student.getEmail());
     }
 
-    public List<Student> getAllStudentByThereName(String name) {
-        return studentRepository.findAllByFirstnameContaining(name);
+    public List<StudentResponseDto> getAllStudentByThereName(String name) {
+        return studentRepository.findAllByFirstnameContaining(name).stream()
+                .map(student -> new StudentResponseDto(student.getFirstname(), student.getLastname(),
+                        student.getEmail()))
+                .collect(Collectors.toList());
     }
 
     public void deleteStudentById(Long id) {
         studentRepository.deleteById(id);
     }
-
-   
 
 }

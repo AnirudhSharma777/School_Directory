@@ -25,7 +25,7 @@ import com.example.postgresSpring.DtoResponses.StudentResponseDto;
 import com.example.postgresSpring.Entities.Student;
 import com.example.postgresSpring.Repositories.StudentRepository;
 
-@ExtendWith(MockitoExtension.class)
+// @ExtendWith(MockitoExtension.class)
 public class StudentServiceTest {
 
     @InjectMocks
@@ -57,7 +57,7 @@ public class StudentServiceTest {
         StudentResponseDto response = studentService.createStudent(dto);
 
         // Then
-        // assertNotNull(response);
+        assertNotNull(response);
         assertEquals(dto.firstname(), response.firstname());
         assertEquals(dto.lastname(), response.lastname());
         assertEquals(dto.email(), response.email());
@@ -148,7 +148,7 @@ public class StudentServiceTest {
         List<StudentResponseDto> response = studentService.getListOfStudent();
 
         // then
-
+        assertNotNull(response);
         assertEquals(2, response.size());
         assertEquals("John", response.get(0).firstname());
         assertEquals("Jane", response.get(1).firstname());
@@ -168,6 +168,7 @@ public class StudentServiceTest {
 
         // Mock the calls
         when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+        
 
         // When
         StudentResponseDto response = studentService.getStudentById(studentId);

@@ -68,12 +68,20 @@ public class StudentService {
         return new StudentResponseDto(student.getFirstname(), student.getLastname(), student.getEmail());
     }
 
+    // public List<StudentResponseDto> getAllStudentByThereName(String name) {
+    //     return studentRepository.findAllByFirstnameContaining(name).stream()
+    //             .map(student -> new StudentResponseDto(student.getFirstname(), student.getLastname(),
+    //                     student.getEmail()))
+    //             .collect(Collectors.toList());
+    // }
+
     public List<StudentResponseDto> getAllStudentByThereName(String name) {
-        return studentRepository.findAllByFirstnameContaining(name).stream()
-                .map(student -> new StudentResponseDto(student.getFirstname(), student.getLastname(),
-                        student.getEmail()))
-                .collect(Collectors.toList());
+        List<Student> students = studentRepository.findAllByFirstnameContaining(name);
+        return students.stream()
+                       .map(student -> new StudentResponseDto(student.getFirstname(), student.getLastname(), student.getEmail()))
+                       .toList();
     }
+    
 
     public void deleteStudentById(Long id) {
         studentRepository.deleteById(id);
